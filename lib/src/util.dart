@@ -219,30 +219,29 @@ const Map<Novel, List<String>> novelMap = {
 ///因小说的人物数量有限，所以返回的数量可能小于count。
 ///
 ///isRandom表示是否从每部小说中随机选择人名。
+///
 ///如果忽略count则isRandom参数不起作用，因为会返回所有人名。
-Iterable<String> generateNames({Author author, Novel novel, int count, bool isRandom = false}) {
+Iterable<String> generateNames({Author? author, Novel? novel, int? count, bool isRandom = false}) {
   if (count == null && author == null && novel == null) {
     return all;
   }
 
   if (count == null) {
     if (author != null && novel != null) {
-      return authorMap[author].take(authorMap[author].length);
+      return authorMap[author]!.take(authorMap[author]!.length);
     }
     if (author != null) {
-      return authorMap[author].take(authorMap[author].length);
+      return authorMap[author]!.take(authorMap[author]!.length);
     }
     if (novel != null) {
-      return novelMap[novel].take(novelMap[novel].length);
+      return novelMap[novel]!.take(novelMap[novel]!.length);
     }
+    return all;
   } else {
     if (count <= 0) {
       throw '参数$count不能小于等于0';
     }
     if (isRandom) {
-      if (author == null && novel == null) {
-        return _getRandomFromAll(count);
-      }
       if (author != null && novel != null) {
         return _getRandomFromAuthor(author, count);
       }
@@ -252,34 +251,34 @@ Iterable<String> generateNames({Author author, Novel novel, int count, bool isRa
       if (novel != null) {
         return _getRandomFromNovel(novel, count);
       }
+      return _getRandomFromAll(count);
     } else {
-      if (author == null && novel == null) {
-        return all.take(count);
-      }
       if (author != null && novel != null) {
-        return authorMap[author].take(count);
+        return authorMap[author]!.take(count);
       }
       if (author != null) {
-        return authorMap[author].take(count);
+        return authorMap[author]!.take(count);
       }
       if (novel != null) {
-        return novelMap[novel].take(count);
+        return novelMap[novel]!.take(count);
       }
+      return all.take(count);
     }
+
   }
 }
 
 ///按小说随机返回人名
 Iterable<String> _getRandomFromNovel(Novel novel, int count) {
   List<String> anotherNovel = [];
-  anotherNovel.addAll(novelMap[novel]);
+  anotherNovel.addAll(novelMap[novel]!);
   return _getRandom(count, anotherNovel);
 }
 
 ///按作者随机返回人名
 Iterable<String> _getRandomFromAuthor(Author author, int count) {
   List<String> anotherAuthor = [];
-  anotherAuthor.addAll(authorMap[author]);
+  anotherAuthor.addAll(authorMap[author]!);
   return _getRandom(count, anotherAuthor);
 }
 
