@@ -1,0 +1,13 @@
+name: random_chinese_name
+description: Utilities for working with Chinese names.
+version: 0.0.1
+homepage: https://github.com/hylxsfh/random_chinese_name
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  
+
+dev_dependencies:
+  test: ^1.16.8
